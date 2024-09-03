@@ -1,0 +1,29 @@
+{
+    "tradingViewData": {
+        "ticker": "AAPL",
+        "exchange": "NASDAQ",
+        "close": 175.30,
+        "open": 172.40,
+        "high": 176.00,
+        "low": 170.50,
+        "strategie": {
+            "name": "MovingAverage",
+            "parameters": {
+                "short_term_period": 5,
+                "long_term_period": 20,
+                "buy_signal": true,
+                "sell_signal": false
+            },
+            "additional_info": [
+                {
+                    "date": "2024-09-01",
+                    "signal": "buy"
+                },
+                {
+                    "date": "2024-09-02",
+                    "signal": "hold"
+                }
+            ]
+        }
+    }
+}
