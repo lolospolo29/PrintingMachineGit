@@ -1,7 +1,8 @@
 {
     "tradingViewData": {
-        "ticker": "AAPL",
-        "exchange": "NASDAQ",
+        "ticker": "BTC",
+        "Broker": "Bybit",
+        "Strategy": "FVG",
         "close": 175.30,
         "open": 172.40,
         "high": 176.00,

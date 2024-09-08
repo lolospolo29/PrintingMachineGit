@@ -1,45 +1,25 @@
 from abc import ABC, abstractmethod
+from datetime import datetime
 
 
 class ITrade(ABC):
 
-    # Abstract method: must be implemented by subclasses
-    @abstractmethod
-    def getStrategy(self):
-        pass
+    @property
+    def entryPrice(self):
+        return self._entryPrice
 
-    @abstractmethod
-    def getBroker(self):
-        pass
+    @entryPrice.setter
+    def entryPrice(self, value):
+        if value < 0:
+            raise ValueError("Entry price cannot be negative.")
+        self._entryPrice = value
 
-    @abstractmethod
-    def getId(self):
-        pass
+    @property
+    def exitPrice(self):
+        return self._exitPrice
 
-    @abstractmethod
-    def getAsset(self):
-        pass
-
-    @abstractmethod
-    def getCurrentRisk(self):
-        pass
-
-    @abstractmethod
-    def getStatus(self):
-        pass
-
-    @abstractmethod
-    def getEntryTime(self):
-        pass
-
-    @abstractmethod
-    def getExitTime(self):
-        pass
-
-    @abstractmethod
-    def getEntryPrice(self):
-        pass
-
-    @abstractmethod
-    def getExitPrice(self):
-        pass
+    @exitPrice.setter
+    def exitPrice(self, value):
+        if value < 0:
+            raise ValueError("Exit price cannot be negative.")
+        self._exitPrice = value
