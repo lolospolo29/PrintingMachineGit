@@ -1,5 +1,5 @@
-from Interfaces import IStrategy, IBroker, ITrade
-from Model.BrokerModels.TestBroker import TestBroker
+from Interfaces import IStrategy, IBroker
+from Model import Trade
 
 
 class TradeManager:
@@ -30,7 +30,7 @@ class TradeManager:
         if broker not in self._brokers:
             self._brokers.append(broker)
 
-    def add_trade(self, trade: ITrade):
+    def add_trade(self, trade: Trade):
         if trade not in self._openTrades:
             self._openTrades.append(trade)
 

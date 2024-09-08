@@ -5,45 +5,24 @@ class Trade(ITrade):
 
     def __int__(self, id, strategy, broker, assets, currentRisk, status, entryTime, entryPrice):
         self._id = id
-        self._strategy = strategy
-        self._broker = broker
+        self._strategy = strategy #string
+        self._broker = broker #string
         self._assets = assets
         self._currentRisk = currentRisk
-        self._status = status
+        self._status = status #Open / Closed / Pending
         self._entryTime = entryTime
         self._exitTime = 0
         self._entryPrice = entryPrice
         self._exitPrice = 0
 
-    def getEntryPrice(self):
-        pass
+    @property
+    def exitPrice(self):
+        return self._exitPrice
 
-    def getExitPrice(self):
-        pass
-
-    def getExitTime(self):
-        pass
-
-    def getEntryTime(self):
-        pass
-
-    def getStatus(self):
-        pass
-
-    def getCurrentRisk(self):
-        pass
-
-    def getAsset(self):
-        pass
-
-    def getId(self):
-        pass
-
-    def getBroker(self):
-        pass
-
-    def getStrategy(self):
-        pass
-
+    @exitPrice.setter
+    def exitPrice(self, value):
+        if value < 0:
+            raise ValueError("Exit price cannot be negative.")
+        self._exitPrice = value
 
 

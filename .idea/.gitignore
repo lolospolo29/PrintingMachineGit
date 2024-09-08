@@ -1,3 +1,9 @@
 # Default ignored files
 /shelf/
 /workspace.xml
+
+# Ignoriere den secrets-Ordner im Config-Verzeichnis
+Config/secrets/
+
+# Ignoriere alle JSON-Dateien im Config-Verzeichnis (falls gewünscht)
+Config/*.json
