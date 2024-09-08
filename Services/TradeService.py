@@ -38,8 +38,10 @@ class TradeManager:
         for broker in self._brokers:
             if broker.name == brokerName:
                 return True
+        return False
 
     def isStrategyNew(self, strategyName):
         for strategy in self._strategies:
             if strategy.name == strategyName:
                 return True
+        return False

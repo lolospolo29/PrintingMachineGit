@@ -7,3 +7,6 @@ Config/secrets/
 
 # Ignoriere alle JSON-Dateien im Config-Verzeichnis (falls gewünscht)
 Config/*.json
+
+# Ignorire Data-Ordner
+Data/

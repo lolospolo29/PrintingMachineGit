@@ -1,7 +1,4 @@
-from Interfaces.ITrade import ITrade
-
-
-class Trade(ITrade):
+class Trade:
 
     def __int__(self, id, strategy, broker, assets, currentRisk, status, entryTime, entryPrice):
         self._id = id
