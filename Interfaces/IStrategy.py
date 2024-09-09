@@ -11,3 +11,7 @@ class IStrategy(ABC):
     @abstractmethod
     def getExit(self):
         pass
+
+    @abstractmethod
+    def isStrategyValid(self):
+        pass
