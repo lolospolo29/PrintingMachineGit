@@ -2,11 +2,15 @@ import json
 import os
 import random
 import time
+import json
 
 from Model.TradingViewData import TradingViewData
 
 
 class DataConverter:
+    def __init__(self):
+        name = "converter"
+
     def ConvertJsonToClass(self, json_data):
         data = json.loads(json_data)
 
@@ -22,6 +26,21 @@ class DataConverter:
                 low=tradingViewData['low']
             )
             return tradingViewClass
+
+    # for MongoDB
+    def ConvertClassToDict(self, obj):
+        if isinstance(obj, list):
+            return [self.ConvertClassToDict(item) for item in obj]
+        elif hasattr(obj, "__dict__"):
+            return {key: self.ConvertClassToDict(value) for key, value in obj.__dict__.items()}
+        else:
+            return obj
+
+    def ConvertClassToJson(self, obj):
+        """
+        Converts an object to a JSON string.
+        """
+        return json.dumps(self.ConvertClassToDict(obj), indent=4)
 
     def JsonToFileToSafeToFolder(self, json_data, secrets_manager):
         """Speichert JSON-Daten direkt in eine Datei, benannt nach dem Ticker mit Zeitstempel."""
