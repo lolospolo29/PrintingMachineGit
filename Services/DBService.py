@@ -81,3 +81,4 @@ class DBService:
         Close the MongoDB connection.
         """
         self.client.close()
+
