@@ -39,6 +39,6 @@ for obj in receivedData:
     # data = conv.convert_objectid_to_str(obj)
     # json_string = json.dumps(data)
     # tradingview = conv.ConvertJsonToClass(json_string)
-    #implement mapper
+    #implement mapperr
 
 # Function to convert ObjectId to string
