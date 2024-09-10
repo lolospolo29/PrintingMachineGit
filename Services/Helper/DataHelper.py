@@ -4,14 +4,17 @@ import random
 import time
 import json
 
+from bson import ObjectId
+
 from Model.TradingViewData import TradingViewData
 
 
-class DataConverter:
+class DataHelper:
     def __init__(self):
         name = "converter"
 
-    def ConvertJsonToClass(self, json_data):
+    @staticmethod
+    def ConvertJsonToClass(json_data):
         data = json.loads(json_data)
 
         if "tradingViewData" in data:
@@ -36,13 +39,15 @@ class DataConverter:
         else:
             return obj
 
+    # if needed
     def ConvertClassToJson(self, obj):
         """
         Converts an object to a JSON string.
         """
         return json.dumps(self.ConvertClassToDict(obj), indent=4)
 
-    def JsonToFileToSafeToFolder(self, json_data, secrets_manager):
+    @staticmethod
+    def JsonToFileToSafeToFolder(json_data, secrets_manager):
         """Speichert JSON-Daten direkt in eine Datei, benannt nach dem Ticker mit Zeitstempel."""
         # Lade den Pfad aus der SecretsManager-Instanz
         data_path = secrets_manager.get_secret('data_path')

@@ -3,7 +3,7 @@ from bson.objectid import ObjectId
 
 
 class DBService:
-    def __init__(self, db_name, uri="mongodb://localhost:27017/"):
+    def __init__(self, db_name, uri):
         """
         Initialize the DbService with a MongoDB URI and database name.
         """

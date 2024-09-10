@@ -7,7 +7,7 @@ class SecretsManager:
     def __init__(self, config_file='C:\\Users\\Schule\\FIAE_LS5\\src\\PrintingMachineGit\\Config\\config.ini'):
         self.config_file = config_file
         self.secrets_file_path = self.load_secrets_path()
-        print(f"Pfad zur Secrets-Datei: {self.secrets_file_path}")  # Debug-Ausgabe
+        # print(f"Pfad zur Secrets-Datei: {self.secrets_file_path}")  # Debug-Ausgabe
         self.secrets = self.load_secrets()
 
     def load_secrets_path(self):
@@ -15,7 +15,7 @@ class SecretsManager:
         config = ConfigParser()
         config.read(self.config_file)
         secrets_path = config.get('paths', 'secrets_path', fallback='Config/secrets.json')
-        print(f"Gelegter secrets_path: {secrets_path}")  # Debug-Ausgabe
+         #print(f"Gelegter secrets_path: {secrets_path}")  # Debug-Ausgabe
         return os.path.join(os.path.dirname(self.config_file), secrets_path)
 
     def load_secrets(self):
