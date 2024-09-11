@@ -2,8 +2,6 @@ from abc import ABC, abstractmethod
 
 
 class IStrategy(ABC):
-
-    # Abstract method: must be implemented by subclasses
     @abstractmethod
     def getEntry(self):
         pass

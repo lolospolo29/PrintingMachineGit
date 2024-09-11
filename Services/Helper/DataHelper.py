@@ -6,12 +6,10 @@ import json
 
 from bson import ObjectId
 
-from Model.TradingViewData import TradingViewData
+from Models.TradingViewData import TradingViewData
 
 
 class DataHelper:
-    def __init__(self):
-        name = "converter"
 
     @staticmethod
     def ConvertJsonToClass(json_data):

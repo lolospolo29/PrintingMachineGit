@@ -15,7 +15,7 @@ class SecretsManager:
         config = ConfigParser()
         config.read(self.config_file)
         secrets_path = config.get('paths', 'secrets_path', fallback='Config/secrets.json')
-         #print(f"Gelegter secrets_path: {secrets_path}")  # Debug-Ausgabe
+        # print(f"Gelegter secrets_path: {secrets_path}")  # Debug-Ausgabe
         return os.path.join(os.path.dirname(self.config_file), secrets_path)
 
     def load_secrets(self):

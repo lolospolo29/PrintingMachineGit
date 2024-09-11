@@ -1,10 +1,8 @@
-from bson import ObjectId
-
-from Model.TradingViewData import TradingViewData
+from Models.Mapper.DataMapper import DataMapper
+from Models.TradingViewData import TradingViewData
 from Services.DBService import DBService
 from Services.Helper.DataHelper import DataHelper
 from Services.Helper.SecretsManager import SecretsManager
-import json
 
 
 class NestedClass:
@@ -30,12 +28,17 @@ secretsMongo = secretsM.get_secret("mongodb")
 
 db = DBService("TradingViewData", secretsMongo)
 
-db.add('Data', json_data)
+db.add("Data", json_data)
 
-receivedData = db.find('Data')
+receivedData = db.find("Data")
+
+mapper = DataMapper()
 
 for obj in receivedData:
+    mappedClass = mapper.MapToClass(obj,"TradingViewData")
     print(obj)
+    print(mappedClass)
+
     # data = conv.convert_objectid_to_str(obj)
     # json_string = json.dumps(data)
     # tradingview = conv.ConvertJsonToClass(json_string)

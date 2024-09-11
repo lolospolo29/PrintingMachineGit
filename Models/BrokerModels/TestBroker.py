@@ -1,4 +1,3 @@
-# Broker-Klasse, die von IBroker erbt
 from Interfaces.IBroker import IBroker
 
 

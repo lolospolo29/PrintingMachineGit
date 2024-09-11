@@ -1,5 +1,5 @@
 from Interfaces import IStrategy, IBroker
-from Model import Trade
+from Models import Trade
 
 
 class TradeManager:
@@ -45,3 +45,10 @@ class TradeManager:
             if strategy.name == strategyName:
                 return True
         return False
+
+    def checkOpenTrades(self,asset):
+        for trade in self._openTrades:
+            if trade._status == "Open" and trade._asset == asset:
+                return trade._groupId
+        return False
+
