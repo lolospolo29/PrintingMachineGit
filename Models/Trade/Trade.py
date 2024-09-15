@@ -1,10 +1,11 @@
 class Trade:
 
-    def __int__(self, id, strategy, broker, asset, status):
+    def __int__(self, id, strategy, broker, asset, status,risk):
         self._id = id
         self._strategy = strategy #string
         self._broker = broker #string
         self._asset = asset
+        self._risk = risk
         self._currentRisk = None
         self._orders = None
 

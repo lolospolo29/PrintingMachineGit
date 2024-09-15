@@ -1,13 +1,14 @@
 {
     "tradingViewData": {
         "ticker": "BTC",
-        "Broker": "Bybit",
-        "Strategy": "FVG",
+        "broker": "Bybit",
         "close": 175.30,
         "open": 172.40,
         "high": 176.00,
         "low": 170.50,
-        "strategie": {
+        "tf": "1H",
+        "smt": "No" ,
+        "strategy": {
             "name": "MovingAverage",
             "parameters": {
                 "short_term_period": 5,

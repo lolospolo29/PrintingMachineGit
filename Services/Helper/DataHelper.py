@@ -2,9 +2,8 @@ import json
 import os
 import random
 import time
-import json
+from datetime import datetime
 
-from bson import ObjectId
 
 from Models.TradingViewData import TradingViewData
 
@@ -19,12 +18,15 @@ class DataHelper:
             tradingViewData = data["tradingViewData"]
             tradingViewClass = TradingViewData(
                 ticker=tradingViewData['ticker'],
-                broker=tradingViewData['Broker'],
+                broker=tradingViewData['broker'],
                 strategy=tradingViewData['strategie'],  # Die Strategie-Daten
                 close=tradingViewData['close'],
-                open_price=tradingViewData['open'],
+                open=tradingViewData['open'],
                 high=tradingViewData['high'],
-                low=tradingViewData['low']
+                low=tradingViewData['low'],
+                time=tradingViewData[datetime.now().time()],
+                smt=tradingViewData['smt'],
+                tf=tradingViewData['tf'],
             )
             return tradingViewClass
 
@@ -58,8 +60,8 @@ class DataHelper:
 
         # Extrahiere relevante Informationen
         ticker = trading_view_data['ticker']
-        broker = trading_view_data['Broker']
-        strategy_name = trading_view_data['strategie']['name']
+        broker = trading_view_data['broker']
+        strategy_name = trading_view_data['strategy']['name']
 
         # Erzeuge den Dateinamen mit dem Tag, der Uhrzeit und einer 6-stelligen eindeutigen ID
         current_time = time.localtime()

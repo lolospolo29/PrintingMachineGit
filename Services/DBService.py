@@ -54,6 +54,19 @@ class DBService:
         result = collection.delete_one({"_id": ObjectId(document_id)})
         return result.deleted_count > 0
 
+    def delete_all(self, collection_name):
+        """
+        Delete all documents in the specified collection.
+
+        param collection_name: The name of the collection.
+        return: The number of documents deleted.
+        """
+        collection = self.db[collection_name]
+        result = collection.delete_many({})
+
+        # Return the count of deleted documents
+        return result.deleted_count
+
     def find(self, collection_name, query=None):
         """
         Find documents in a collection based on a query.

@@ -10,8 +10,6 @@ def receive_signal():
     # AlertSignal.reset_countdown()  # Countdown zurücksetzen
     json_string = request.data.decode('utf-8')
 
-    print(json_string)
-
     # TradeSignal.order_signal(json_string)
 
     return f'Received Analyse data: {json_string}'

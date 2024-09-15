@@ -22,15 +22,15 @@ class TradeManager:
     def openTrades(self):
         return self._openTrades
 
-    def add_strategy(self, strategy: IStrategy):
+    def addStrategy(self, strategy: IStrategy):
         if strategy not in self._strategies:
             self._strategies.append(strategy)
 
-    def add_broker(self, broker: IBroker):
+    def addBroker(self, broker: IBroker):
         if broker not in self._brokers:
             self._brokers.append(broker)
 
-    def add_trade(self, trade: Trade):
+    def addTrade(self, trade: Trade):
         if trade not in self._openTrades:
             self._openTrades.append(trade)
 
