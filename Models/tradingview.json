@@ -7,7 +7,7 @@
         "high": 176.00,
         "low": 170.50,
         "tf": "1H",
-        "smt": "No" ,
+        "smt": "No / Can also be a Pair(DXY)" ,
         "strategy": {
             "name": "MovingAverage",
             "parameters": {

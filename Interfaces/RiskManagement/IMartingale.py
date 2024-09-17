@@ -3,5 +3,8 @@ from abc import ABC, abstractmethod
 
 class IMartingale(ABC):
     @abstractmethod
-    def getMartingale(self):
+    def getMartingaleModel(self):
+        pass
+    @abstractmethod
+    def getPercentagesPerOrder(self):
         pass

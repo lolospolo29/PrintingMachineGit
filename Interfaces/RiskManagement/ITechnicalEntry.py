@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 
 
-class ITechnicalEnry(ABC): #Drill Fill CE
+class ITechnicalEntry(ABC):  # Drill Fill CE
     @abstractmethod
-    def getTechnicalEntry(self):
+    def getEntry(self,candle):
         pass
