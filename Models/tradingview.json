@@ -6,8 +6,9 @@
         "open": 172.40,
         "high": 176.00,
         "low": 170.50,
-        "tf": "1H",
+        "time" : "13:30",
         "smt": "No / Can also be a Pair(DXY)" ,
+        "tf": "1H",
         "strategy": {
             "name": "MovingAverage",
             "parameters": {

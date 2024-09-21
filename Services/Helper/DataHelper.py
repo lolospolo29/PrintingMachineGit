@@ -10,26 +10,6 @@ from Models.TradingViewData import TradingViewData
 
 class DataHelper:
 
-    @staticmethod
-    def ConvertJsonToClass(json_data):
-        data = json.loads(json_data)
-
-        if "tradingViewData" in data:
-            tradingViewData = data["tradingViewData"]
-            tradingViewClass = TradingViewData(
-                ticker=tradingViewData['ticker'],
-                broker=tradingViewData['broker'],
-                strategy=tradingViewData['strategie'],  # Die Strategie-Daten
-                close=tradingViewData['close'],
-                open=tradingViewData['open'],
-                high=tradingViewData['high'],
-                low=tradingViewData['low'],
-                time=tradingViewData[datetime.now().time()],
-                smt=tradingViewData['smt'],
-                tf=tradingViewData['tf'],
-            )
-            return tradingViewClass
-
     # for MongoDB
     def ConvertClassToDict(self, obj):
         if isinstance(obj, list):

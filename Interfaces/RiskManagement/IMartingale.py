@@ -6,5 +6,5 @@ class IMartingale(ABC):
     def getMartingaleModel(self):
         pass
     @abstractmethod
-    def getPercentagesPerOrder(self):
+    def getOrderAmount(self):
         pass

@@ -1,8 +1,10 @@
 from pymongo import MongoClient
 from bson.objectid import ObjectId
 
+from Interfaces.IDBService import IDBService
 
-class DBService:
+
+class DBService(IDBService):
     def __init__(self, db_name, uri):
         """
         Initialize the DbService with a MongoDB URI and database name.
@@ -67,7 +69,7 @@ class DBService:
         # Return the count of deleted documents
         return result.deleted_count
 
-    def find(self, collection_name, query=None):
+    def find(self, collection_name, query):
         """
         Find documents in a collection based on a query.
         param collection_name: The name of the collection.

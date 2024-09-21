@@ -1,25 +1,23 @@
+import asyncio
+from threading import Thread
+
 from flask import Flask, request
+
+from Initializing.ClassInstances import signalController
 
 # rom Classes import AlertSignal, TradeSignal
 
 app = Flask(__name__)
 
 
-@app.route('/bot', methods=['POST'])
+@app.route('/tradingview', methods=['POST'])
 def receive_signal():
-    # AlertSignal.reset_countdown()  # Countdown zurücksetzen
-    json_string = request.data.decode('utf-8')
+    jsonString = request.get_json()
 
-    # TradeSignal.order_signal(json_string)
+    thread = Thread(target=signalController.orderSignal(jsonString))
+    thread.start()
 
-    return f'Received Analyse data: {json_string}'
-
-
-@app.route('/startcountdown', methods=['POST'])
-def startcountdown():
-    # AlertSignal.start_Alert_Thread()  # Countdown zurücksetzen
-    json_string = request.data.decode('utf-8')
-    return f'Received Analyse data: {json_string}'
+    return f'Received Analyse data: {jsonString}'
 
 
 if __name__ == '__main__':

@@ -3,5 +3,9 @@ from abc import ABC, abstractmethod
 
 class IOrderWeightage(ABC):
     @abstractmethod
-    def getOrderWeightage(self):
+    def getPercentagePerLevel(self):
+        pass
+
+    @abstractmethod
+    def sortOrderToTPLevel(self):
         pass

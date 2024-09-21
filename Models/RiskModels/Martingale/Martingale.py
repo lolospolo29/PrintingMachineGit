@@ -2,7 +2,7 @@ from Interfaces.RiskManagement.IMartingale import IMartingale
 
 
 class Martingale(IMartingale):
-    def getPercentagesPerOrder(self):
+    def getOrderAmount(self):
         pass
 
     def getMartingaleModel(self):

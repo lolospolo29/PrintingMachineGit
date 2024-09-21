@@ -1,5 +1,5 @@
 class RiskManager:
-    def __init__(self,maxDrawdown,RiskPerTrade,currentDrawdown):
+    def __init__(self,maxDrawdown,RiskPerTrade):
         self.maxDrawdown = maxDrawdown  # Maximaler Verlust in %
         self.riskPerTrade = RiskPerTrade  # Prozentuales Risiko pro Trade
         self.currentDrawdown = 0.0  # Aktueller Drawdown

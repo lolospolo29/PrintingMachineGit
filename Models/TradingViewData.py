@@ -1,8 +1,8 @@
 class TradingViewData:
-    def __init__(self, ticker, broker, strategy, close, open, high, low,time,smt,tf):
+    def __init__(self, ticker, broker, strategy, close, open, high, low, time, smt, tf):
         self.ticker = ticker
         self.broker = broker
-        self.strategy = strategy  # Eine Liste von Strategien
+        self.strategy = strategy
         self.close = close
         self.open = open
         self.high = high
@@ -11,6 +11,18 @@ class TradingViewData:
         self.smt = smt
         self.tf = tf
 
-    def __repr__(self):
-        return (f"TradingViewData(ticker={self.ticker}, broker={self.broker}, strategy={self.strategy}, "
-                f"close={self.close}, open={self.open}, high={self.high}, low={self.low})")
+    def to_dict(self):
+        return {
+            "tradingViewData": {
+                "ticker": self.ticker,
+                "broker": self.broker,
+                "close": self.close,
+                "open": self.open,
+                "high": self.high,
+                "low": self.low,
+                "tf": self.tf,
+                "smt": self.smt,
+                "strategy": self.strategy,
+                "time": self.time,
+            }
+        }
