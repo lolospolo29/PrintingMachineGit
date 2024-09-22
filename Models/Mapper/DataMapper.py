@@ -1,6 +1,7 @@
 import json
 from datetime import datetime
 
+from Models.Trade.Trade import Trade
 from Models.TradingViewData import TradingViewData
 
 
@@ -9,8 +10,8 @@ class DataMapper:
     def MapToClass(data, name):
         # If _id is present, handle it as needed (e.g., ignore or use it)
         # For this example, we'll just ignore it
-        if name == "TradingViewData":
-            data = data.get("tradingViewData")
+        if name == "TradingData":
+            data = data.get("TradingData")
             return TradingViewData(
                     ticker=data.get('ticker'),
                     broker=data.get('broker'),
@@ -23,3 +24,15 @@ class DataMapper:
                     smt=data.get('smt'),
                     tf=data.get('tf')
                 )
+        if name == "Trade":
+            data = data.get("Trade")
+            return Trade(
+                id=data.get('id'),
+                strategy=data.get('strategy'),
+                broker=data.get('broker'),
+                asset=data.get('asset'),
+                status= data.get('status'),
+                risk=data.get('risk'),
+                currentRisk=data.get('currentRisk'),
+                orders=data.get('orders')
+            )

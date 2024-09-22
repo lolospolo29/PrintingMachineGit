@@ -1,36 +1,54 @@
 class TradingController:
-    def __init__(self, DataMapper, Monitoring, DBFactory,TradeService):
-        self._DataMapper = DataMapper
+    def __init__(self, Monitoring, DBHelper, StrategyFactory):
         self._Monitoring = Monitoring
-        self._DBFactory = DBFactory
-        self._TradeService = TradeService
+        self._DBHelper = DBHelper
+        self._StrategyFactory = StrategyFactory
 
     def handleTradingViewSignal(self, jsonData):
-        tradingViewData = self._DataMapper.MapToClass(jsonData, "TradingViewData")
 
-        self.addDataToDB("mongodb", "TradingData", tradingViewData.ticker, tradingViewData.to_dict())
+        tradingViewData = self._DBHelper.mapDataToClass(jsonData, "TradingData")
 
-        query = {"ticker": "a"}  # Setzt den ticker-Wert in das Query
+        self._DBHelper.addDataToDB("mongodb", "TradingData", tradingViewData.ticker, tradingViewData.to_dict())
 
-        OpenTradelist = self.findDataInDBResultToList("mongodb","Trade","OpenTrades",query)
+        query = self._DBHelper.buildQuery("Trade", "asset", "AAPL")  # Setzt den ticker-Wert in das Query
 
-        if len(OpenTradelist) == 0:
-            self._Monitoring.logInformation(tradingViewData.ticker," : No Trades Open")
+        TradeList = self._DBHelper.findDataInDBResultToList("mongodb", "Trades", "OpenTrades", query)
 
-    def addDataToDB(self, dbType, dbName, tableName, data):
-        db = self._DBFactory.returnClass(dbType, dbName)
-        self._Monitoring.logInformation((tableName, ": DB added New Data"))
-        db.add(tableName, data)
+        if self.isTradeListEmpty(TradeList):
+            self._Monitoring.logInformation((tradingViewData.ticker, " : No Trades Open"))
+        if not self.isTradeListEmpty(TradeList):
+            Trades = []
+            self._Monitoring.logInformation((tradingViewData.ticker, len(TradeList)))
+            for obj in TradeList:
+                Trades.append(self._DBHelper.mapDataToClass(obj, "Trade"))
+            self.handleTrades(Trades)
 
-    def findDataInDBResultToList(self, dbType, dbName, tableName, query):
-        db = self._DBFactory.returnClass(dbType, dbName)
-        return db.find(tableName, query)
+    @staticmethod
+    def isTradeListEmpty(OpenTradeList):
+        if len(OpenTradeList) == 0:
+            return True
+        if len(OpenTradeList) > 0:
+            return False
+
+    def handleTrades(self, Trades):
+        Trades = self.removeClosedTrades(Trades)
+
+        for trade in Trades:
+            strategy = self._StrategyFactory.returnClass(trade.strategy)
+
+    def removeClosedTrades(self, Trades):
+        OpenTrades = []
+        for trade in Trades:
+            if trade.status == "Open":
+                OpenTrades.append(trade)
+            if trade.status == "Closed":
+                query = self._DBHelper.buildQuery("Trade", "id", trade.id)
+                self._DBHelper.deleteDataFromData("mongodb", "Trades", "OpenTrades", query)
+
+        return OpenTrades
 
     def handleExit(self):
         return None
 
     def handleEntry(self):
-        return None
-
-    def resetDB(self):
         return None

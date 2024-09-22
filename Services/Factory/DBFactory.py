@@ -1,5 +1,5 @@
 from Interfaces.IFactory import IFactory
-from Services.DBService import DBService
+from Models.DBModels.MongoDB import DBService
 from Services.Helper.SecretsManager import SecretsManager
 
 

@@ -1,7 +1,7 @@
 from Interfaces.RiskManagement.ITimeWindow import ITimeWindow
 
 
-class LondOpen(ITimeWindow):
+class LondonOpen(ITimeWindow):
     def getExitWindow(self):
         return (12)
 

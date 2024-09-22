@@ -13,7 +13,7 @@ class TradingViewData:
 
     def to_dict(self):
         return {
-            "tradingViewData": {
+            "TradingData": {
                 "ticker": self.ticker,
                 "broker": self.broker,
                 "close": self.close,
