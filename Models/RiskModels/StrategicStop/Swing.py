@@ -1,9 +1,6 @@
-from Interfaces.RiskManagement.ITechnicalStop import ITechnicalStop
+from Interfaces.RiskManagement.IStrategicStop import IStrategicStop
 
 
-class SwingStop(ITechnicalStop):
-    def getExit(self, data):
-        pass
-
-    def getExitList(self, data):
+class SwingStop(IStrategicStop):
+    def getStrategyStop(self):
         pass

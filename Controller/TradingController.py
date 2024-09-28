@@ -1,8 +1,8 @@
 class TradingController:
-    def __init__(self, Monitoring, DBHelper, StrategyFactory):
+    def __init__(self, Monitoring, MongoDB, DataMapper):
         self._Monitoring = Monitoring
-        self._DBHelper = DBHelper
-        self._StrategyFactory = StrategyFactory
+        self._MongoDB = MongoDB
+        self._DataMapper = DataMapper
 
     def handleTradingViewSignal(self, jsonData):
 

@@ -30,3 +30,6 @@ class IDBService(ABC):
     @abstractmethod
     def find(self):
         pass
+    @abstractmethod
+    def buildQuery(self):
+        pass

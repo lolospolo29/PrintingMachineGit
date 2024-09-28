@@ -1,9 +1,7 @@
-from Interfaces.RiskManagement.ITechnicalStop import ITechnicalStop
+from Interfaces.RiskManagement.IStrategicStop import IStrategicStop
 
 
-class OBStop(ITechnicalStop):
-    def getExit(self,candle):
+class OBStop(IStrategicStop):
+    def getStrategyStop(self):
         pass
 
-    def getExitList(self,data):
-        pass

@@ -1,26 +1,20 @@
 class Trade:
 
-    def __init__(self, id, strategy, broker, asset, status,risk,currentRisk,orders):
-        self.id = id
-        self.strategy = strategy #string
-        self.broker = broker #string
-        self.asset = asset
-        self.status = status
-        self.risk = risk
-        self.currentRisk = currentRisk
-        self.orders = orders
+    def __init__(self,brokerName,strategyName):
+        self.status = None
+        self.orders = []
+        self.brokerName = brokerName
+        self.strategyName = strategyName
+        self.pnl = 0
 
     def to_dict(self):
         return {
             "Trade": {
-                "id": self.id,
-                "strategy": self.strategy,
-                "broker": self.broker,
-                "asset": self.asset,
                 "status": self.status,
-                "risk": self.risk,
-                "currentRisk": self.currentRisk,
                 "orders": self.orders,
+                "brokerName": self.brokerName,
+                "strategyName": self.strategyName,
+                "pnl": self.pnl,
             }
         }
 

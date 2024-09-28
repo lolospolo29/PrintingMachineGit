@@ -105,3 +105,7 @@ class DBService(IDBService):
         Close the MongoDB connection.
         """
         self.client.close()
+
+    @staticmethod
+    def buildQuery(className, attribute, value):
+        return {f"{className}.{attribute}": value}
