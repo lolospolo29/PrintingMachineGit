@@ -5,3 +5,4 @@ class Order:
         self.stopLoss = None
         self.takeProfit = None
         self.riskPercentage = None
+        self.broker = None

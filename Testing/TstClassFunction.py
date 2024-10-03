@@ -1,7 +1,7 @@
-from Models.Mapper.DataMapper import DataMapper
+from TechnicalModels.Mapper.DataMapper import DataMapper
 from Models.TradingViewData import TradingViewData
 from Monitoring.Monitoring import Monitoring
-from Models.DBModels.MongoDB import DBService
+from TechnicalModels.DBModels.MongoDB import DBService
 from Services.Helper.SecretsManager import SecretsManager
 
 

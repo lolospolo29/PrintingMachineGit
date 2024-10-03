@@ -7,7 +7,7 @@ client = MongoClient('mongodb://127.0.0.1:27017')
 db = client.TradingViewData
 
 # Access the 'Data' collection
-collection = db.Data
+collection = db.AssetData
 
 # Insert a sample document into the 'Data' collection
 document = {
