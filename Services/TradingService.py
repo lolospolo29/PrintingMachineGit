@@ -1,10 +1,11 @@
-from Models.AssetModels.Asset import Asset
+from Models.Asset.Asset import Asset
 
 
 class TradingService:
-    def __init__(self, Monitoring, MongoDB, DataMapper):
+    def __init__(self, Monitoring, MongoDBData,MongoDBTrades, DataMapper):
         self._Monitoring = Monitoring
-        self._MongoDB = MongoDB
+        self._MongoDBData = MongoDBData
+        self._MongoDBTrades = MongoDBTrades
         self._DataMapper = DataMapper
         self.assets = {}
         self.openTrades = {}

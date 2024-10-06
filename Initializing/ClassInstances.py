@@ -30,11 +30,12 @@ secretsMongo = secretsManager.get_secret("mongodb")
 
 # Services
 
-mongoDB = DBService("TradingData", secretsMongo)
+mongoDBData = DBService("TradingData", secretsMongo)
+mongoDBTrades = DBService("Trades", secretsMongo)
 
 riskManager = RiskManager(2, 1)
 
-tradingService = TradingService(monitoring, mongoDB, dataMapper)
+tradingService = TradingService(monitoring, mongoDBData,mongoDBTrades, dataMapper)
 
 # Controller
 

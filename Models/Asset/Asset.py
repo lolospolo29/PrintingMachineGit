@@ -1,4 +1,4 @@
-from Models.AssetModels.AssetData import AssetData
+from Models.Asset.AssetData import AssetData
 
 
 class Asset:
