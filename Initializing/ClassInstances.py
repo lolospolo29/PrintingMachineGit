@@ -1,12 +1,16 @@
 from Controller.SignalController import SignalControler
+from Models.Asset.Asset import Asset
+from Models.Strategy.TestStrategy import TestStrategy
 from Services.TradingService import TradingService
 from TechnicalModels.BrokerModels.TestBroker import TestBroker
 from TechnicalModels.DBModels.MongoDB import DBService
 from TechnicalModels.Mapper.DataMapper import DataMapper
-from Models.StrategyModels.TestStrategy import TestStrategy
 from Monitoring.Monitoring import Monitoring
 from Services.Helper.SecretsManager import SecretsManager
 from Services.RiskManager import RiskManager
+
+# Asset
+btc = Asset("BTCUSDT.P","Test","USDT")
 
 # Mapper
 dataMapper = DataMapper()
@@ -39,5 +43,10 @@ tradingService = TradingService(monitoring, mongoDBData,mongoDBTrades, dataMappe
 
 # Controller
 
-
 signalController = SignalControler(monitoring, tradingService)
+
+
+# Logic
+
+tradingService.createAsset("BTCUSDT.P","Test","USDT")
+tradingService.addTimeframeToAsset("BTCUSDT.P","5M")

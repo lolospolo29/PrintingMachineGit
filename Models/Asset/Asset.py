@@ -15,11 +15,24 @@ class Asset:
     def addNewBroker(self, brokerName):
         self.brokerNameList.append(brokerName)
 
-    def addNewData(self, timeFrame, open,high,low,close,time):
+    def addNewData(self, timeFrame, open, high, low, close, time):
         for assetData in self.dataStorage:
             if assetData.timeFrame == timeFrame:
                 assetData.addData(open, high, low, close, time)
                 break
+
+    def getAllTimeFrames(self):
+        """Gibt eine Liste aller timeFrames zurück, die in dataStorage gespeichert sind."""
+        return [assetData.timeFrame for assetData in self.dataStorage]
+
+    def timeFrameDataStorageDict(self, timeframe):
+        for assetData in self.dataStorage:
+            if assetData.timeFrame == timeframe:
+                return assetData.toDict()
+
+    def clearAllData(self):
+        for assetData in self.dataStorage:
+            assetData.clearData()
 
     def getHistoricalData(self, timeframe, numberOfDataPoints):
         """

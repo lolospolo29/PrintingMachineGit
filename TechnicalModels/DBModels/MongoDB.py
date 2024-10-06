@@ -106,6 +106,41 @@ class DBService(IDBService):
         """
         self.client.close()
 
+    def deleteOldDocuments(self, collection_name, date_field, iso_date):
+        """
+        Delete documents older than a specified ISO date from the specified collection.
+
+        :param collection_name: The name of the collection.
+        :param date_field: The field name that contains the date.
+        :param iso_date: The ISO date to compare against.
+        :return: Number of deleted documents.
+        """
+        # Delete documents older than the specified ISO date
+        collection = self.db[collection_name]
+        result = collection.delete_many({
+            date_field: {  # Use the provided date field
+                '$lt': iso_date  # Less than the specified date
+            }
+        })
+
+        return result.deleted_count  # Return the number of deleted documents
+
+    def getDataWithinDateRange(self, collection_name, date_field, start_date, end_date):
+        """
+        Retrieve data within a specified date range from the specified collection.
+
+        :param collection_name: The name of the collection.
+        :param date_field: The field name that contains the date.
+        :param start_date: The start date for the range (in ISO format).
+        :param end_date: The end date for the range (in ISO format).
+        :return: A list of documents within the specified date range.
+        """
+        # Query to get documents within the specified date range
+        query = {date_field: {'$gte': start_date,
+                              '$lte': end_date}}  # Greater than or equal to start_date and less than or equal to end_date
+        collection = self.db[collection_name]
+        return list(collection.find(query))
+
     @staticmethod
     def buildQuery(className, attribute, value):
         return {f"{className}.{attribute}": value}

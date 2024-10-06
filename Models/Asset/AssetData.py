@@ -1,9 +1,10 @@
-import datetime
 from collections import deque
 
-import pytz as pytz
+import datetime
+import pytz
 
-utc_minus_4 = pytz.timezone('Etc/GMT+4')
+# Zeitzone für Berlin
+berlin_tz = pytz.timezone('Europe/Berlin')
 
 
 class AssetData:
@@ -13,7 +14,7 @@ class AssetData:
         self.low = deque(maxlen=90)
         self.close = deque(maxlen=90)
         self.time = deque(maxlen=90)
-        self.timesStamp = datetime.datetime.now(utc_minus_4).strftime('%d %B')
+        self.timeStamp = datetime.datetime.now(berlin_tz)
         self.timeFrame = timeFrame
 
     def addData(self, openPrice, highPrice, lowPrice, closePrice, time):
@@ -25,3 +26,27 @@ class AssetData:
         self.low.append(lowPrice)
         self.close.append(closePrice)
         self.time.append(time)
+
+    def clearData(self):
+        """Clears all data from the deques."""
+        self.open.clear()
+        self.high.clear()
+        self.low.clear()
+        self.close.clear()
+        self.time.clear()
+
+    def toDict(self):
+        """Gibt alle Datenpunkte als Dictionary zurück, inklusive timeStamp."""
+        # Zeitformatierung: Entfernt Datum und gibt nur die Uhrzeit zurück
+
+        return {
+            "AssetData": {
+                "timeFrame": self.timeFrame,
+                "open": list(self.open),
+                "high": list(self.high),
+                "low": list(self.low),
+                "close": list(self.close),
+                "time": list(self.time),  # Formatiert nur die Uhrzeit
+                "timeStamp": self.timeStamp  # Zeitstempel im Format ISO
+            }
+        }

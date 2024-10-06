@@ -5,5 +5,5 @@ class SignalControler:
 
     def orderSignal(self, jsonData):
 
-        if "TradingData" in jsonData:
+        if "tradingData" in jsonData:
             self._TradingController.handleTradingViewSignal(jsonData)

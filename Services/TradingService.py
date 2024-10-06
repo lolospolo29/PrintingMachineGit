@@ -1,8 +1,18 @@
+import datetime
+
+import pytz
+
 from Models.Asset.Asset import Asset
+
+berlin_tz = pytz.timezone('Europe/Berlin')
+current_time = datetime.datetime.now(berlin_tz)
+date_60_days_ago = current_time - datetime.timedelta(days=60)
+iso_date_60_days_ago = date_60_days_ago.isoformat()
+iso_current_time = current_time.isoformat()
 
 
 class TradingService:
-    def __init__(self, Monitoring, MongoDBData,MongoDBTrades, DataMapper):
+    def __init__(self, Monitoring, MongoDBData, MongoDBTrades, DataMapper):
         self._Monitoring = Monitoring
         self._MongoDBData = MongoDBData
         self._MongoDBTrades = MongoDBTrades
@@ -43,8 +53,23 @@ class TradingService:
 
     def handleTradingViewSignal(self, jsonData):
 
-        tradingData = self._DataMapper.mapDataToClass(jsonData, "TradingData")
+        tradingData = self._DataMapper.MapToClass(jsonData, "tradingData")
         self.addDataToAsset(tradingData.asset, tradingData.timeFrame, tradingData)
+        if tradingData.time.strftime("%H:%M") == "00:00":
+            self.dailyDataArchive()
+
+    def RecentDataRetriever(self):
+        pass
+
+    def dailyDataArchive(self):
+        for key, asset in self.assets.items():
+            timeFrames = asset.getAllTimeFrames()
+            for timeFrame in timeFrames:
+                assetTimeFrameData = asset.timeFrameDataStorageDict(timeFrame)
+                self._MongoDBData.add(asset.name, assetTimeFrameData)
+            asset.clearAllData()
+            self._MongoDBData.deleteOldDocuments(asset.name, 'timeStamp', iso_date_60_days_ago)
+        #  self._MongoDBData.getDataWithinDateRange(asset.name, 'timeStamp',iso_current_time, iso_date_60_days_ago)
 
     def findOpenTrades(self):
         query = self._DBHelper.buildQuery("Trade", "asset", "AAPL")  # Setzt den ticker-Wert in das Query
@@ -55,18 +80,11 @@ class TradingService:
 
         if tradeListCount == 0:
             self._Monitoring.logInformation("No Trades Open")
-        if not self.isTradeListEmpty(tradeList):
+        if not tradeListCount < 0:
             Trades = []
             self._Monitoring.logInformation("Open Trades")
             for obj in tradeList:
                 Trades.append(self._DBHelper.mapDataToClass(obj, "Trade"))
-
-    @staticmethod
-    def isTradeListEmpty(OpenTradeList):
-        if len(OpenTradeList) == 0:
-            return True
-        if len(OpenTradeList) > 0:
-            return False
 
     def handleTrades(self, Trades):
         Trades = self.removeClosedTrades(Trades)
