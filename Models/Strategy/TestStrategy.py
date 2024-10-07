@@ -1,12 +1,19 @@
 from Interfaces.IStrategy import IStrategy
+from Models.StrategyModels.TimeModels.London import LondonOpen
 
 
 class TestStrategy(IStrategy):
-    def __init__(self,name):
+    def __init__(self, name):
         self._name = name
-        self._TimeWindow = "LondonOpen"
+        self._TimeWindow = LondonOpen()
+        self.level = []
 
     def isInTime(self):
+        if self._TimeWindow.IsInEntryWindow() and self._TimeWindow.IsInExitWindow():
+            return True
+        return False
+
+    def CalculateLevels(self):
         pass
 
     def isStrategyValid(self):

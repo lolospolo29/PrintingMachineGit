@@ -2,10 +2,6 @@ import json
 import os
 import random
 import time
-from datetime import datetime
-
-
-from Models.TradingViewData import TradingViewData
 
 
 class DataHelper:
@@ -68,11 +64,3 @@ class DataHelper:
         # Schreibe die JSON-Daten in die Datei
         with open(json_file_path, 'w') as jsonfile:
             json.dump(data, jsonfile, indent=4)  # Schöne Ausgabe mit Einrückungen
-
-#
-# data = json.loads(json_data)
-#
-# # Auf den Namen des Feldes zugreifen
-# for person in data:
-#     for key in person.keys():
-#         print(f"Feldname: {key}")

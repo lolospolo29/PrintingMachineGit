@@ -1,6 +1,6 @@
 import datetime
 
-
+from Models.Trade.Trade import Trade
 from Models.TradingData import TradingData
 
 
@@ -32,3 +32,27 @@ class DataMapper:
                     time=current_time,  # Use the formatted time
                     timeFrame=timeFrame
                     )
+        if name == "Trade":
+            # Mappe die Daten auf das Trade-Objekt
+            data = data.get("Trade")
+
+            # Handle asset
+            asset_value = data.get('asset')
+            asset_value = asset_value.strip("'") if asset_value else None  # Entferne einfache Anführungszeichen
+
+            # Handle strategyName
+            strategy_name = data.get('strategyName', '')
+
+            # Initialisiere das Trade-Objekt
+            trade = Trade(asset=asset_value, strategyName=strategy_name)
+
+            # Mappe den Status und PnL
+            trade.status = data.get('status', None)
+            trade.pnl = data.get('pnl', 0)
+
+            # Verarbeite die Order-Liste, falls vorhanden
+            trade.orders = data.get('orders', [])
+
+            return trade
+        else:
+            raise ValueError("Unsupported mapping for: " + name)

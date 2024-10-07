@@ -18,7 +18,7 @@ class TradingService:
         self._MongoDBTrades = MongoDBTrades
         self._DataMapper = DataMapper
         self.assets = {}
-        self.openTrades = {}
+        self.openTrades = []
 
     def createAsset(self, name, strategyName, smtPairName):
         """
@@ -60,6 +60,7 @@ class TradingService:
 
     def RecentDataRetriever(self):
         pass
+        # self._MongoDBData.getDataWithinDateRange(asset.name, 'timeStamp',iso_current_time, iso_date_60_days_ago)
 
     def dailyDataArchive(self):
         for key, asset in self.assets.items():
@@ -69,12 +70,11 @@ class TradingService:
                 self._MongoDBData.add(asset.name, assetTimeFrameData)
             asset.clearAllData()
             self._MongoDBData.deleteOldDocuments(asset.name, 'timeStamp', iso_date_60_days_ago)
-        #  self._MongoDBData.getDataWithinDateRange(asset.name, 'timeStamp',iso_current_time, iso_date_60_days_ago)
 
     def findOpenTrades(self):
-        query = self._DBHelper.buildQuery("Trade", "asset", "AAPL")  # Setzt den ticker-Wert in das Query
+        query = self._MongoDBTrades.buildQuery("Trade", "asset", "BTCUSD")  # Setzt den ticker-Wert in das Query
 
-        tradeList = self._DBHelper.findDataInDBResultToList("mongodb", "Trades", "OpenTrades", query)
+        tradeList = self._MongoDBTrades.find("OpenTrades", query)
 
         tradeListCount = len(tradeList)
 
@@ -84,13 +84,13 @@ class TradingService:
             Trades = []
             self._Monitoring.logInformation("Open Trades")
             for obj in tradeList:
-                Trades.append(self._DBHelper.mapDataToClass(obj, "Trade"))
+                self.openTrades.append(self._DataMapper.MapToClass(obj, "Trade"))
 
     def handleTrades(self, Trades):
         Trades = self.removeClosedTrades(Trades)
 
-        for trade in Trades:
-            strategy = self._StrategyFactory.returnClass(trade.strategy)
+        # for trade in Trades:
+        #     strategy = self._StrategyFactory.returnClass(trade.strategy)
 
     def removeClosedTrades(self, Trades):
         OpenTrades = []

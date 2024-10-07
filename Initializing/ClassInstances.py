@@ -10,7 +10,7 @@ from Services.Helper.SecretsManager import SecretsManager
 from Services.RiskManager import RiskManager
 
 # Asset
-btc = Asset("BTCUSDT.P","Test","USDT")
+btc = Asset("BTCUSDT.P", "Test", "USDT")
 
 # Mapper
 dataMapper = DataMapper()
@@ -31,7 +31,6 @@ secretsManager = SecretsManager()
 
 secretsMongo = secretsManager.get_secret("mongodb")
 
-
 # Services
 
 mongoDBData = DBService("TradingData", secretsMongo)
@@ -39,14 +38,14 @@ mongoDBTrades = DBService("Trades", secretsMongo)
 
 riskManager = RiskManager(2, 1)
 
-tradingService = TradingService(monitoring, mongoDBData,mongoDBTrades, dataMapper)
+tradingService = TradingService(monitoring, mongoDBData, mongoDBTrades, dataMapper)
 
 # Controller
 
 signalController = SignalControler(monitoring, tradingService)
 
-
 # Logic
 
-tradingService.createAsset("BTCUSDT.P","Test","USDT")
-tradingService.addTimeframeToAsset("BTCUSDT.P","5M")
+tradingService.createAsset("BTCUSDT.P", "Test", "USDT")
+tradingService.addTimeframeToAsset("BTCUSDT.P", "5M")
+tradingService.findOpenTrades()
