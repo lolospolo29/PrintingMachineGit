@@ -10,16 +10,16 @@ from Services.Helper.SecretsManager import SecretsManager
 from Services.RiskManager import RiskManager
 
 # Asset
-btc = Asset("BTCUSDT.P", "Test", "USDT")
+btc = Asset("BTCUSDT.P", "FVG", "USDT")
 
 # Mapper
 dataMapper = DataMapper()
 
 # Broker
-tstBroker = TestBroker("tstBroker")
+tstBroker = TestBroker("Bybit")
 
 # Strategy
-tstStrategy = TestStrategy("tstStrategy")
+fvg = TestStrategy("FVG")
 
 # Monitoring
 
@@ -46,6 +46,6 @@ signalController = SignalControler(monitoring, tradingService)
 
 # Logic
 
-tradingService.createAsset("BTCUSDT.P", "Test", "USDT")
+tradingService.createAsset(btc.name, fvg.name, "USDT")
 tradingService.addTimeframeToAsset("BTCUSDT.P", "5M")
-tradingService.findOpenTrades()
+#tradingService.findOpenTrades()

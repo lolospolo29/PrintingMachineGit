@@ -14,7 +14,7 @@ class AssetData:
         self.low = deque(maxlen=90)
         self.close = deque(maxlen=90)
         self.time = deque(maxlen=90)
-        self.timeStamp = datetime.datetime.now(berlin_tz)
+        self.timeStamp = datetime.datetime.now(berlin_tz).isoformat()
         self.timeFrame = timeFrame
 
     def addData(self, openPrice, highPrice, lowPrice, closePrice, time):

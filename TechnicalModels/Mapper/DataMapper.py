@@ -51,7 +51,7 @@ class DataMapper:
             trade.pnl = data.get('pnl', 0)
 
             # Verarbeite die Order-Liste, falls vorhanden
-            trade.orders = data.get('orders', [])
+            trade.orders = data.get('orders')
 
             return trade
         else:

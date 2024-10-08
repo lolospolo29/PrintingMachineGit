@@ -55,12 +55,29 @@ class TradingService:
 
         tradingData = self._DataMapper.MapToClass(jsonData, "tradingData")
         self.addDataToAsset(tradingData.asset, tradingData.timeFrame, tradingData)
-        if tradingData.time.strftime("%H:%M") == "00:00":
+        if tradingData.time == "00:00":
+            self.openTrades = []
+            self.findOpenTrades()
+        else:
             self.dailyDataArchive()
+            self.RecentDataRetriever()
+
+    def handleTrades(self):
+        pass
+        # for trade in Trades:
+        #     strategy = self._StrategyFactory.returnClass(trade.strategy)
+
+    @staticmethod
+    def handleExit():
+        return None
+
+    @staticmethod
+    def handleEntry():
+        return None
 
     def RecentDataRetriever(self):
-        pass
-        # self._MongoDBData.getDataWithinDateRange(asset.name, 'timeStamp',iso_current_time, iso_date_60_days_ago)
+        for key, asset in self.assets.items():
+            a = self._MongoDBData.getDataWithinDateRange(asset.name, 'AssetData.timeStamp',iso_current_time, iso_date_60_days_ago)
 
     def dailyDataArchive(self):
         for key, asset in self.assets.items():
@@ -72,39 +89,25 @@ class TradingService:
             self._MongoDBData.deleteOldDocuments(asset.name, 'timeStamp', iso_date_60_days_ago)
 
     def findOpenTrades(self):
-        query = self._MongoDBTrades.buildQuery("Trade", "asset", "BTCUSD")  # Setzt den ticker-Wert in das Query
+        for key, asset in self.assets.items():
+            query = self._MongoDBTrades.buildQuery("Trade", "asset", asset.name)  # Setzt den ticker-Wert in das Query
 
-        tradeList = self._MongoDBTrades.find("OpenTrades", query)
+            tradeList = self._MongoDBTrades.find("OpenTrades", query)
 
-        tradeListCount = len(tradeList)
+            tradeListCount = len(tradeList)
 
-        if tradeListCount == 0:
-            self._Monitoring.logInformation("No Trades Open")
-        if not tradeListCount < 0:
-            Trades = []
-            self._Monitoring.logInformation("Open Trades")
-            for obj in tradeList:
-                self.openTrades.append(self._DataMapper.MapToClass(obj, "Trade"))
+            if tradeListCount == 0:
+                self._Monitoring.logInformation("No Trades Open")
+            if not tradeListCount < 0:
+                self._Monitoring.logInformation("Open Trades")
+                for obj in tradeList:
+                    self.openTrades.append(self._DataMapper.MapToClass(obj, "Trade"))
+        self.removeClosedTrades()
 
-    def handleTrades(self, Trades):
-        Trades = self.removeClosedTrades(Trades)
-
-        # for trade in Trades:
-        #     strategy = self._StrategyFactory.returnClass(trade.strategy)
-
-    def removeClosedTrades(self, Trades):
-        OpenTrades = []
-        for trade in Trades:
-            if trade.status == "Open":
-                OpenTrades.append(trade)
-            if trade.status == "Closed":
-                query = self._DBHelper.buildQuery("Trade", "id", trade.id)
-                self._DBHelper.deleteDataFromData("mongodb", "Trades", "OpenTrades", query)
-
-        return OpenTrades
-
-    def handleExit(self):
-        return None
-
-    def handleEntry(self):
-        return None
+    def removeClosedTrades(self):
+        for trade in self.openTrades:
+            if trade.status == "closed":
+                query = self._MongoDBTrades.buildQuery("Trade", "status", "closed")
+                self._MongoDBTrades.deleteByQuery("OpenTrades", query)
+                self.openTrades.remove(trade)
+        print(self.openTrades)

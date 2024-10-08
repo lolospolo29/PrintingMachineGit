@@ -4,7 +4,7 @@ from Models.StrategyModels.TimeModels.London import LondonOpen
 
 class TestStrategy(IStrategy):
     def __init__(self, name):
-        self._name = name
+        self.name = name
         self._TimeWindow = LondonOpen()
         self.level = []
 
